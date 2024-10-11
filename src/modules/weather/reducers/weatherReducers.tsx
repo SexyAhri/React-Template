@@ -2,7 +2,7 @@ import {
   FETCH_WEATHER_REQUEST,
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER_FAILURE,
-} from "..//actions/weatherActions";
+} from "../actions/weatherActions";
 
 const initialState = {
   loading: false,
