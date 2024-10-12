@@ -1,15 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../utils/ProtectedRoute";
-import Home from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
+import HomePage from "../pages/HomePage";
+import UserDashboard from "../pages/UserDashboard";
+import AdminDashboard from "../pages/AdminDashboard ";
 
 const RoutesComponent = (users, userRole) => {
   const ADMIN = "admin";
+  const USER = "user";
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        {/* <Route path="/login" element={<LoginPage />}></Route> */}
+        <Route path="/" element={<LoginPage />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
         {Array.isArray(users) && users.length > 0
           ? users.map((user) => (
               <Route
@@ -21,12 +24,22 @@ const RoutesComponent = (users, userRole) => {
           : null}
 
         <Route
-          path="/login"
+          path="/admin"
           element={
             <ProtectedRoute
               requiredRole={ADMIN}
               userRole={userRole}
-              element={<LoginPage />}
+              element={<AdminDashboard />}
+            />
+          }
+        ></Route>
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute
+              requiredRole={USER}
+              userRole={userRole}
+              element={<UserDashboard />}
             />
           }
         ></Route>
