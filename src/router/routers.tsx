@@ -1,50 +1,50 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../utils/ProtectedRoute";
-import LoginPage from "../pages/LoginPage";
+// routes.js
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import HomePage from "../pages/HomePage";
-import UserDashboard from "../pages/UserDashboard";
+import LoginPage from "../pages/auth/LoginPage";
+import ErrorPage from "../pages/error/ErrorPage";
 import AdminDashboard from "../pages/AdminDashboard ";
+import UserDashboard from "../pages/UserDashboard";
+import ProtectedRoute from "../utils/ProtectedRoute";
 
-const RoutesComponent = (users, userRole) => {
-  const ADMIN = "admin";
-  const USER = "user";
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />}></Route>
-        <Route path="/home" element={<HomePage />}></Route>
-        {Array.isArray(users) && users.length > 0
-          ? users.map((user) => (
-              <Route
-                key={user.id}
-                path={`/user/${user.id}`}
-                element={<h1>{user.id}</h1>}
-              ></Route>
-            ))
-          : null}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LoginPage />,
+  },
+  {
+    path: "/Error",
+    element: <ErrorPage />,
+  },
+  {
+    path: "/home",
+    element: <HomePage />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/home/user",
+        element: (
+          <ProtectedRoute requireAuth={true} allowedRoles={["user", "admin"]}>
+            <UserDashboard />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/home/admin",
+    errorElement: <ErrorPage />,
+    element: (
+      <ProtectedRoute requireAuth={true} allowedRoles={["admin"]}>
+        <AdminDashboard />
+      </ProtectedRoute>
+    ),
+  },
+]);
 
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute
-              requiredRole={ADMIN}
-              userRole={userRole}
-              element={<AdminDashboard />}
-            />
-          }
-        ></Route>
-        <Route
-          path="/user"
-          element={
-            <ProtectedRoute
-              requiredRole={USER}
-              userRole={userRole}
-              element={<UserDashboard />}
-            />
-          }
-        ></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+const RouterConfig = () => {
+  return <RouterProvider router={router} />;
 };
-export default RoutesComponent;
+
+export default RouterConfig;

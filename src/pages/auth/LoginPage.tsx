@@ -28,7 +28,7 @@ const LoginPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     navigate("/home");
-    localStorage.setItem("token", userName);
+    // localStorage.setItem("token", userName);
   };
 
   return (
