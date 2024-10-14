@@ -1,0 +1,51 @@
+.dark-sidebar {
+    background-color: #181818;
+    color: white;
+
+    .logo {
+        color: white;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .ant-menu {
+        background-color: #181818;
+    }
+
+    .ant-menu-item {
+        color: white;
+    }
+
+    .ant-menu-item:hover {
+        background-color: #333;
+    }
+
+    .ant-menu-item-selected {
+        background-color: #1890ff;
+        color: white;
+    }
+}
+
+.light-sidebar {
+    background-color: #ffffff;
+    color: black;
+
+    .logo {
+        color: black;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .ant-menu-item {
+        color: black;
+    }
+
+    .ant-menu-item:hover {
+        background-color: #e6f7ff;
+    }
+
+    .ant-menu-item-selected {
+        background-color: #1890ff;
+        color: white;
+    }
+}

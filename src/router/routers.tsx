@@ -1,45 +1,59 @@
 // routes.js
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/auth/LoginPage";
-import ErrorPage from "../pages/error/ErrorPage";
-import AdminDashboard from "../pages/AdminDashboard ";
-import UserDashboard from "../pages/UserDashboard";
-import ProtectedRoute from "../utils/ProtectedRoute";
+import HomePage from "@/pages/HomePage";
+import LoginPage from "@/pages/auth/LoginPage";
+import ErrorPage from "@/pages/error/ErrorBoundaryPage";
+import AdminPage from "@/pages/admin/AdminPage";
+import UserListPage from "@/pages/admin/UserListPage";
+import ProtectedRoute from "@/utils/ProtectedRoute";
+import SettingComponent from "@/pages/setting/settingPage";
+import LayoutComponent from "@/components/Layout/LayoutComponent";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LoginPage />,
   },
-  {
-    path: "/Error",
-    element: <ErrorPage />,
-  },
+
   {
     path: "/home",
-    element: <HomePage />,
+    element: <LayoutComponent />, // 使用带有导航栏的布局
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "/home/index",
+        element: <HomePage />,
+      },
       {
         path: "/home/user",
         element: (
           <ProtectedRoute requireAuth={true} allowedRoles={["user", "admin"]}>
-            <UserDashboard />
+            <UserListPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/home/admin",
+        element: (
+          <ProtectedRoute requireAuth={true} allowedRoles={["admin"]}>
+            <AdminPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/home/setting",
+        element: (
+          <ProtectedRoute requireAuth={true} allowedRoles={["admin"]}>
+            <SettingComponent />
           </ProtectedRoute>
         ),
       },
     ],
   },
   {
-    path: "/home/admin",
-    errorElement: <ErrorPage />,
-    element: (
-      <ProtectedRoute requireAuth={true} allowedRoles={["admin"]}>
-        <AdminDashboard />
-      </ProtectedRoute>
-    ),
+    path: "/Error",
+    element: <ErrorPage />,
   },
 ]);
 

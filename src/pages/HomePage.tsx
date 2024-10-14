@@ -1,15 +1,19 @@
-// import "@/styles/HomePage.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWeather } from "../modules/weather/actions/weatherActions";
+import { fetchWeather } from "@/modules/weather/actions/weatherActions";
+import { RootState, AppDispatch } from "@/redux/store";
+import "@/styles/HomePage.scss";
+
 const HomePage = () => {
-  const dispatch: any = useDispatch();
+  const dispatch: AppDispatch = useDispatch(); // 使用带类型的 dispatch
   const { weather, loading, error } = useSelector(
-    (state: any) => state.weather
+    (state: RootState) => state.weather
   );
+
   useEffect(() => {
     dispatch(fetchWeather());
   }, [dispatch]);
+
   return (
     <div>
       {loading ? (
@@ -18,7 +22,9 @@ const HomePage = () => {
         <p>Error: {error}</p>
       ) : (
         <ul>
-          <li>{weather[0]}</li>
+          <li>{weather?.city}</li>
+          <li>{weather?.dayWeather}</li>
+          <li>{weather?.dayWeatherShort}</li>
         </ul>
       )}
     </div>

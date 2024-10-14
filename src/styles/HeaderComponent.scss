@@ -1,0 +1,86 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    height: 64px;
+
+    background-color: inherit;
+
+    transition: background-color 0.3s ease;
+
+    &.dark-theme {
+        background-color: #181818;
+
+        color: white;
+
+        .header-title h3 {
+            color: white;
+        }
+
+        .header-controls button {
+            color: white;
+        }
+
+        .header-controls button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    &.light-theme {
+        background-color: #ffffff;
+
+        color: black;
+
+        .header-title h3 {
+            color: black;
+        }
+
+        .header-controls button {
+            color: black;
+        }
+
+        .header-controls button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+.header-title {
+    flex-grow: 1;
+
+    h3 {
+        font-size: 18px;
+        margin: 0;
+        padding-left: 20px;
+    }
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+
+    button {
+        margin-right: 10px;
+
+        border: none;
+
+        background: none;
+
+        padding: 8px 12px;
+
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .ant-dropdown-open button {
+        color: #1890ff;
+    }
+}

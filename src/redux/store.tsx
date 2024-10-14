@@ -1,8 +1,14 @@
-/* eslint-disable react-refresh/only-export-components */
+// store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./rootReducer";
+import rootReducer from "./rootReducers";
 
-export default configureStore({
+// 创建 store
+export const store = configureStore({
   reducer: rootReducer,
-  devTools: true
 });
+
+// 定义 store 的类型
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+
+export default store;

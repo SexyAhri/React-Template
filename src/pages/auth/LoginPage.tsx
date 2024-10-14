@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
 
-import "../styles/LoginPage.scss";
+import "@/styles/LoginPage.scss";
 
 const LoginPage = () => {
   const navigate = useNavigate();
