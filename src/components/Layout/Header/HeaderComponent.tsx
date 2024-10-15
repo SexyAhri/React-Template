@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { Layout, Button, Dropdown, Menu } from "antd";
+import { Layout, Dropdown, Switch, Menu, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  toggleTheme,
-  toggleCollapse,
-} from "@/modules/layout/actions/LayoutActions";
+import { toggleTheme } from "@/modules/layout/actions/LayoutActions";
 import { RootState } from "@/redux/store";
 import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   UserOutlined,
   LogoutOutlined,
+  HomeOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { IntlProvider, FormattedMessage } from "react-intl";
@@ -28,58 +25,27 @@ const { Header } = Layout;
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isDarkTheme, collapsed } = useSelector(
-    (state: RootState) => state.layout
-  );
+  const { isDarkTheme } = useSelector((state: RootState) => state.layout);
   const [currentLocale, setCurrentLocale] = useState<"en-US" | "zh-CN">(
     "en-US"
   );
 
   const changeLanguage = (lang: "en-US" | "zh-CN") => setCurrentLocale(lang);
-  const menu = (
-    <Menu
-      items={[
-        {
-          key: "0",
-          icon: <UserOutlined />,
-          label: (
-            <span>
-              <FormattedMessage id="menu.home" defaultMessage="Home" />
-            </span>
-          ),
-        },
-        {
-          key: "1",
-          icon: <UserOutlined />,
-          label: (
-            <span onClick={() => navigate("/profile")}>
-              <FormattedMessage id="menu.profile" defaultMessage="Profile" />
-            </span>
-          ),
-        },
-        {
-          key: "2",
-          icon: <LogoutOutlined />,
-          label: (
-            <span onClick={() => navigate("/logout")}>
-              <FormattedMessage id="menu.logout" defaultMessage="Logout" />
-            </span>
-          ),
-        },
-      ]}
-    />
-  );
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Home",
+      icon: <SettingOutlined />,
+      onClick: () => navigate("/home/index"),
+    },
+  ];
 
   return (
     <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
       <Header
         className={isDarkTheme ? "header dark-theme" : "header light-theme"}
       >
-        <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => dispatch(toggleCollapse())}
-        />
         <div className="header-title">
           <h3>
             <FormattedMessage
@@ -89,34 +55,28 @@ const HeaderComponent = () => {
           </h3>
         </div>
         <div className="header-controls">
-          <Button
-            type="text"
-            icon={<LogoutOutlined />}
-            onClick={() => dispatch(toggleTheme())}
-          >
-            <FormattedMessage
-              id="button.toggleTheme"
-              defaultMessage="Toggle Theme"
+          <div className="switch-group">
+            <Switch
+              checkedChildren="🌛"
+              unCheckedChildren="🔆"
+              checked={isDarkTheme}
+              onChange={() => dispatch(toggleTheme())}
             />
-          </Button>
-          <Button
-            type="text"
-            icon={<UserOutlined />}
-            onClick={() => changeLanguage("en-US")}
-          >
-            English
-          </Button>
-          <Button
-            type="text"
-            icon={<UserOutlined />}
-            onClick={() => changeLanguage("zh-CN")}
-          >
-            中文
-          </Button>
-          <Dropdown menu={{ menu }} trigger={["click"]}>
-            <Button type="text" icon={<UserOutlined />}>
-              Admin
-            </Button>
+            <Switch
+              checkedChildren="EN"
+              unCheckedChildren="中文"
+              checked={currentLocale === "en-US"}
+              onChange={(checked) =>
+                changeLanguage(checked ? "en-US" : "zh-CN")
+              }
+            />
+          </div>
+
+          <Dropdown menu={{ items }}>
+            <a onClick={(e) => e.preventDefault()}>
+              <UserOutlined />
+              <Space>Admin</Space>
+            </a>
           </Dropdown>
         </div>
       </Header>

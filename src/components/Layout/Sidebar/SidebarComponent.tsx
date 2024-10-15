@@ -1,12 +1,16 @@
 import { Layout, Menu } from "antd";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   UserOutlined,
   HomeOutlined,
   DashboardOutlined,
   SettingOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toggleCollapse } from "@/modules/layout/actions/LayoutActions";
 import "@/styles/SidebarComponent.scss";
 
 const { Sider } = Layout;
@@ -14,6 +18,9 @@ const { Sider } = Layout;
 const SidebarComponent = ({ role }) => {
   const { isDarkTheme, collapsed } = useSelector((state) => state.layout); // 从 Redux 获取状态
   const navigate = useNavigate();
+  const location = useLocation();
+  const [selectedKey, setSelectedKey] = useState([]);
+  const dispatch = useDispatch();
 
   const getMenuItems = (role) => {
     const menuItems = [
@@ -27,7 +34,7 @@ const SidebarComponent = ({ role }) => {
         key: "2",
         icon: <UserOutlined />,
         label: "User Dashboard",
-        children: [
+        items: [
           {
             key: "2-1",
             label: "User Profile",
@@ -64,15 +71,23 @@ const SidebarComponent = ({ role }) => {
 
   const menuItems = getMenuItems(role);
 
+  useEffect(() => {
+    const currentKey = menuItems.find((item) =>
+      location.pathname.includes(item.key)
+    );
+    if (currentKey) {
+      setSelectedKey([currentKey.key]);
+    }
+  }, [location.pathname, menuItems]);
+
   return (
     <Sider
       collapsible
       collapsed={collapsed}
-      trigger={null}
+      onCollapse={() => dispatch(toggleCollapse())}
       className={isDarkTheme ? "dark-sidebar" : "light-sidebar"}
     >
-      <div className="logo">Admin Panel</div>
-      <Menu mode="inline" defaultSelectedKeys={["1"]} items={menuItems} />
+      <Menu selectedKeys={selectedKey} items={menuItems} />
     </Sider>
   );
 };

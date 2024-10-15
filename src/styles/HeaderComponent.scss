@@ -1,20 +1,15 @@
 .header {
+    // margin-right: 10px;
     display: flex;
     justify-content: space-between;
-
     align-items: center;
-
     padding: 0 20px;
-
     height: 64px;
-
     background-color: inherit;
-
     transition: background-color 0.3s ease;
 
     &.dark-theme {
         background-color: #181818;
-
         color: white;
 
         .header-title h3 {
@@ -28,11 +23,18 @@
         .header-controls button:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+
+        .ant-switch-checked {
+            background-color: #1890ff !important;
+        }
+
+        .ant-switch {
+            background-color: #333;
+        }
     }
 
     &.light-theme {
         background-color: #ffffff;
-
         color: black;
 
         .header-title h3 {
@@ -46,6 +48,14 @@
         .header-controls button:hover {
             background-color: rgba(0, 0, 0, 0.1);
         }
+
+        .ant-switch-checked {
+            background-color: #1890ff !important;
+        }
+
+        .ant-switch {
+            background-color: #1890ff !important;
+        }
     }
 }
 
@@ -55,7 +65,7 @@
     h3 {
         font-size: 18px;
         margin: 0;
-        padding-left: 20px;
+        padding-left: 10px;
     }
 }
 
@@ -63,24 +73,39 @@
     display: flex;
     align-items: center;
 
-    button {
-        margin-right: 10px;
 
-        border: none;
+    .switch-group {
+        padding: 12px;
+        display: flex;
+        gap: 12px;
+    }
 
-        background: none;
+    .ant-switch {
+        display: flex;
+        align-items: center;
+    }
 
-        padding: 8px 12px;
+    .ant-switch-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        line-height: 2;
 
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.05);
+        .ant-switch-inner-unchecked {
+            padding-top: 25px;
         }
     }
 
-    .ant-dropdown-open button {
-        color: #1890ff;
+    .ant-switch-inner svg {
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    .ant-switch-checked {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 5px;
     }
 }

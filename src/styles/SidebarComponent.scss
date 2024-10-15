@@ -1,5 +1,5 @@
 .dark-sidebar {
-    background-color: #181818;
+    background-color: #141414;
     color: white;
 
     .logo {
@@ -9,21 +9,41 @@
     }
 
     .ant-menu {
-        background-color: #181818;
+        background-color: #141414;
+        border: none !important;
     }
 
     .ant-menu-item {
         color: white;
     }
 
-    .ant-menu-item:hover {
-        background-color: #333;
+    .ant-menu-item-active {
+        background-color: #7c1313 !important;
     }
 
     .ant-menu-item-selected {
-        background-color: #1890ff;
+        background-color: #1890ff !important;
         color: white;
     }
+
+    .ant-layout-sider-trigger {
+        background-color: #1f1f1f;
+        color: #175fc4;
+        border-top: 1px solid #333;
+        border: none;
+    }
+
+    .ant-layout-sider-trigger:hover {
+        background-color: #333;
+    }
+}
+
+.bottom-collapse {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: "10px 0",
 }
 
 .light-sidebar {
@@ -41,11 +61,23 @@
     }
 
     .ant-menu-item:hover {
-        background-color: #e6f7ff;
+        background-color: #2e2d2d !important;
+        color: #ffffff !important;
     }
 
-    .ant-menu-item-selected {
-        background-color: #1890ff;
+    .li {
+        background-color: #1890ff !important;
         color: white;
+    }
+
+    .ant-layout-sider-trigger {
+        background-color: #ffffff;
+        color: #175fc4;
+        border-top: 1px solid #f0f0f0;
+
+    }
+
+    .ant-layout-sider-trigger:hover {
+        background-color: #1890ff I;
     }
 }
