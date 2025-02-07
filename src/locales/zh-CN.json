@@ -1,0 +1,9 @@
+{
+  "header.dashboard": "仪表盘",
+  "menu.profile": "个人资料",
+  "menu.logout": "登出",
+  "button.toggleTheme": "切换主题",
+  "menu": {
+    "logout": ""
+  }
+}

@@ -1,0 +1,69 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    /* 允许头部撑满剩余空间 */
+    padding: 20px;
+}
+
+
+.left-header,
+.right-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+
+}
+
+.left-header {
+    justify-content: center;
+    /* 保持垂直居中 */
+    text-align: right;
+}
+
+.right-header {
+
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.left-header>* {
+    margin-left: auto;
+    text-align: left;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: #f8f9fa;
+    height: 50px;
+    /* 页脚高度，可自定义 */
+    margin-top: auto;
+    /* 页脚自动定位到底部 */
+}
+
+/* 响应式设计 */
+@media (max-width: 767px) {
+
+    /* 手机端 */
+    .left-header,
+    .right-header {
+        flex-basis: 100%;
+    }
+}

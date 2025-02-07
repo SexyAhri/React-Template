@@ -1,0 +1,53 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": false,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true, // 添加此选项以允许非模块脚本与模块脚本的交互，与"allowSyntheticDefaultImports"搭配使用效果更佳。
+    "sourceMap": true, // 可选，如果在开发环境中，开启Source Maps可以帮助调试。生产环境可根据需要关闭。
+    "declaration": true, // 可选，如果项目需要生成.d.ts类型声明文件供其他项目使用。
+    "declarationDir": "./dist/types", // 如果开启declaration，指定类型声明文件的输出目录。
+
+    /* Advanced Options */
+    "removeComments": false, // 可选，根据需要决定是否在编译时移除代码中的注释。
+    "importHelpers": true // 如果使用了"import 'helpers'"形式的辅助工具函数，此选项会自动引入，减少输出包体积。
+  },
+  "include": [
+    "./src/**/*",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.json",
+    "src/**/*",
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/__tests__/*",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ] // 排除测试文件
+}

@@ -1,0 +1,106 @@
+// 公共样式
+.sidebar {
+  .logo {
+    text-align: center;
+    padding: 16px;
+  }
+
+  .ant-menu {
+    border: none !important;
+  }
+
+  .ant-menu-item {
+    transition: background-color 0.3s;
+  }
+
+  .ant-layout-sider-trigger {
+    color: #175fc4;
+    border-top: 1px solid;
+    border: none;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+
+  .ant-menu-submenu-arrow {
+    top: 43% !important;
+  }
+}
+
+// 深色模式
+.dark-sidebar {
+  @extend .sidebar;
+  background-color: #141414;
+  color: white;
+
+  .logo {
+    color: white;
+  }
+
+  .ant-menu {
+    background-color: #141414;
+  }
+
+  .ant-menu-item {
+    color: white;
+
+    &-active {
+      background-color: #7c1313 !important;
+    }
+
+    &-selected {
+      background-color: #7c1313 !important;
+      color: white;
+    }
+  }
+
+  .ant-layout-sider-trigger {
+    background-color: #1f1f1f;
+    border-top-color: #333;
+  }
+}
+
+// 浅色模式
+.light-sidebar {
+  @extend .sidebar;
+
+  background-color: #ffffff;
+  color: black;
+
+  .logo {
+    color: black;
+  }
+
+  .ant-menu-item {
+    color: black;
+
+    &:hover {
+      background-color: #2e2d2d !important;
+      color: #ffffff !important;
+    }
+
+    &-selected {
+      background-color: #2e2d2d !important;
+      color: white;
+    }
+  }
+
+  .ant-layout-sider-trigger {
+    background-color: #ffffff;
+    border-top-color: #f0f0f0;
+
+    &:hover {
+      background-color: #2e2d2d;
+    }
+  }
+}
+
+// 底部折叠按钮样式
+.bottom-collapse {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0; // 移除多余的逗号
+}
