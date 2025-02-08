@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeather } from '@/modules/weather/actions/weatherActions';
 import { RootState, AppDispatch } from '@/redux/store';
+import { Button } from 'antd';
 import '@/styles/HomePage.scss';
 
 const HomePage = () => {
@@ -35,7 +36,9 @@ const HomePage = () => {
           <li>{weather?.dayWeatherShort}</li>
         </ul>
       )}
-      <button onClick={handleClick}>Throw Error</button>
+      <Button type="primary" onClick={handleClick}>
+        Throw Error
+      </Button>
     </div>
   );
 };

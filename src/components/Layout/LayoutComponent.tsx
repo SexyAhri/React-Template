@@ -1,13 +1,13 @@
 // LayoutComponent.tsx
 import { useEffect, useState } from 'react';
-import { Layout, Spin, ConfigProvider, theme } from 'antd';
-import { Outlet, useNavigation } from 'react-router-dom';
+import { Layout, Spin, ConfigProvider, theme, Breadcrumb } from 'antd';
+import { Outlet, useNavigation, Link, useLocation } from 'react-router-dom';
 import SidebarComponent from '@/components/Layout/Sidebar/SidebarComponent';
 import HeaderComponent from '@/components/Layout/Header/HeaderComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { toggleCollapse } from '@/modules/layout/actions/LayoutActions';
-
+import ErrorBoundary from '@/pages/error/ErrorBoundaryPage';
 const { Content } = Layout;
 
 const AppLayout = () => {
@@ -47,7 +47,16 @@ const AppLayout = () => {
   useEffect(() => {
     setLoading(navigation.state === 'loading');
   }, [navigation.state]);
-
+  const location = useLocation();
+  const pathnames = location.pathname.split('/').filter((x) => x);
+  const breadcrumbItems = pathnames.map((name, index) => {
+    const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
+    const isLast = index === pathnames.length - 1;
+    return {
+      key: routeTo,
+      title: isLast ? name : <Link to={routeTo}>{name}</Link>,
+    };
+  });
   return (
     <ConfigProvider
       theme={{
@@ -62,14 +71,20 @@ const AppLayout = () => {
         <HeaderComponent />
         <Layout>
           <SidebarComponent role="admin" />
-          <Content
-            className={isDarkTheme ? 'dark-theme' : 'light-theme'}
-            style={{ margin: '10px', flex: 1 }} // 确保 Content 占据剩余空间
-          >
-            <Spin spinning={loading} tip="Loading...">
-              <Outlet />
-            </Spin>
-          </Content>
+          <ErrorBoundary>
+            <Content
+              className={isDarkTheme ? 'dark-theme' : 'light-theme'}
+              style={{ margin: '10px', flex: 1 }} // 确保 Content 占据剩余空间
+            >
+              <Breadcrumb
+                style={{ margin: '16px 0' }}
+                items={breadcrumbItems}
+              />
+              <Spin spinning={loading} tip="Loading...">
+                <Outlet />
+              </Spin>
+            </Content>
+          </ErrorBoundary>
         </Layout>
       </Layout>
     </ConfigProvider>

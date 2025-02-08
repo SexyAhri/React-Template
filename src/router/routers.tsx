@@ -1,59 +1,88 @@
 // routers.tsx
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
-import HomePage from '@/pages/HomePage';
-import LoginPage from '@/pages/auth/LoginPage';
-import AdminPage from '@/pages/admin/AdminPage';
-import UserListPage from '@/pages/admin/UserListPage';
-import ProtectedRoute from '@/utils/ProtectedRoute';
-import SettingComponent from '@/pages/setting/settingPage';
-import LayoutComponent from '@/components/Layout/LayoutComponent';
-import UnauthorizedPage from '@/pages/error/UnauthorizedPage';
+// Lazy load components to improve performance
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
+const AdminPage = lazy(() => import('@/pages/admin/AdminPage'));
+const UserListPage = lazy(() => import('@/pages/admin/UserListPage'));
+const ProtectedRoute = lazy(() => import('@/utils/ProtectedRoute'));
+const SettingComponent = lazy(() => import('@/pages/setting/settingPage'));
+const LayoutComponent = lazy(
+  () => import('@/components/Layout/LayoutComponent'),
+);
+const UnauthorizedPage = lazy(() => import('@/pages/error/UnauthorizedPage'));
 
-const router = createBrowserRouter([
+// Define routes in a separate constant for better maintainability
+const routes = [
   {
     path: '/',
-    element: <LoginPage />,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginPage />
+      </Suspense>
+    ),
   },
   {
-    path: '/Error',
-    element: <UnauthorizedPage />,
+    path: '/error',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <UnauthorizedPage />
+      </Suspense>
+    ),
   },
   {
     path: '/home',
-    element: <LayoutComponent />, // 使用带有导航栏的布局，并包裹在 ErrorBoundary 中
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <LayoutComponent />
+      </Suspense>
+    ),
     children: [
       {
-        path: '/home/index',
-        element: <HomePage />,
-      },
-      {
-        path: '/home/user',
+        path: '', // Default sub-path
         element: (
-          <ProtectedRoute requireAuth={true} allowedRoles={['user', 'admin']}>
-            <UserListPage />
-          </ProtectedRoute>
+          <Suspense fallback={<div>Loading...</div>}>
+            <HomePage />
+          </Suspense>
         ),
       },
       {
-        path: '/home/admin',
+        path: 'user',
         element: (
-          <ProtectedRoute requireAuth={true} allowedRoles={['admin']}>
-            <AdminPage />
-          </ProtectedRoute>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProtectedRoute requireAuth={true} allowedRoles={['user', 'admin']}>
+              <UserListPage />
+            </ProtectedRoute>
+          </Suspense>
         ),
       },
       {
-        path: '/home/setting',
+        path: 'admin',
         element: (
-          <ProtectedRoute requireAuth={true} allowedRoles={['admin']}>
-            <SettingComponent />
-          </ProtectedRoute>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProtectedRoute requireAuth={true} allowedRoles={['admin']}>
+              <AdminPage />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'setting',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ProtectedRoute requireAuth={true} allowedRoles={['admin']}>
+              <SettingComponent />
+            </ProtectedRoute>
+          </Suspense>
         ),
       },
     ],
   },
-]);
+];
+
+const router = createBrowserRouter(routes);
 
 const RouterConfig = () => {
   return <RouterProvider router={router} />;

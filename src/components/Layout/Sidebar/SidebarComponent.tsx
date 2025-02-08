@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toggleCollapse } from '@/modules/layout/actions/LayoutActions';
 import '@/styles/SidebarComponent.scss';
 import { RootState } from '@/redux/store';
+const { useToken } = theme;
 const { Sider } = Layout;
 interface SidebarComponentProps {
   role: string;
@@ -23,6 +24,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ role }) => {
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
   const dispatch = useDispatch();
+  const { token } = useToken();
 
   const menuItems = useMemo(() => {
     const items = [
@@ -30,8 +32,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ role }) => {
         key: '1',
         icon: <HomeOutlined />,
         label: 'Home',
-        path: '/home/index',
-        onClick: () => navigate('/home/index'),
+        path: '',
+        onClick: () => navigate(''),
       },
       {
         key: '2',
@@ -41,8 +43,8 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ role }) => {
           {
             key: '2-1',
             label: 'User Profile',
-            path: '/home/user',
-            onClick: () => navigate('/home/user'),
+            path: 'User',
+            onClick: () => navigate('user'),
           },
         ],
       },
@@ -54,22 +56,21 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ role }) => {
           key: '3',
           icon: <DashboardOutlined />,
           label: 'Admin Dashboard',
-          path: '/home/admin',
-          onClick: () => navigate('/home/admin'),
+          path: 'Admin',
+          onClick: () => navigate('admin'),
         },
         {
           key: '4',
           icon: <SettingOutlined />,
           label: 'Settings',
-          path: '/home/setting',
-          onClick: () => navigate('/home/setting'),
+          path: 'Setting',
+          onClick: () => navigate('setting'),
         },
       );
     }
 
     return items;
   }, [role]);
-
   useEffect(() => {
     const findCurrentKey = (items: any[], pathname: string): string | null => {
       for (const item of items) {
@@ -106,7 +107,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ role }) => {
       onCollapse={() => dispatch(toggleCollapse())}
       className={isDarkTheme ? 'dark-sidebar' : 'light-sidebar'}
     >
-      <Menu selectedKeys={selectedKey} items={menuItems} mode="inline" />
+      <Menu
+        selectedKeys={selectedKey}
+        items={menuItems}
+        mode="inline"
+        style={{ backgroundColor: token.colorBgContainer }}
+      />
     </Sider>
   );
 };

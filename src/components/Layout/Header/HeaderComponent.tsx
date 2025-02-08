@@ -32,7 +32,7 @@ const HeaderComponent = () => {
       key: '1',
       label: 'Home',
       icon: <SettingOutlined />,
-      onClick: () => navigate('/home/index'),
+      onClick: () => navigate(''),
     },
   ];
 
